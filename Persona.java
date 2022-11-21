@@ -6,6 +6,51 @@ public class Persona {
     String []tipoContacto = {"Amigo", "Conocido", "Compañero"}; // 1.- amigo 2.- conocido 3.-compañero
     int temp; //tipoContacto[temp]
     String numeroTelefono;
+    String path;
+    String tipo;
+
+    public Persona() throws IOException {
+        //crear un archivo en una direccion que solo nosotros conozcamos c:/Direccion/direccion.txt
+        // variable path
+        // direccion.exist();
+        //leer la direccion buffered reader
+        File f = new File("C:/Direccion/"); // Definimos en donde se localizara la carpeta
+        if(!f.exists()){
+            f.mkdirs(); //Si no existe la carpeta entonces la creamos
+            f = new File("C:/Direccion/direccion.txt");
+            path = JOptionPane.showInputDialog("Ingrese la ruta de memoria para guardar sus contactos \n Ejemplo: C:/agenda");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+            bw.write(path);
+            bw.flush();
+            bw.close();
+        }
+        else{
+            f = new File("C:/Direccion/direccion.txt");
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            path = br.readLine();
+        }
+    }
+    //path = usuario
+    //Que contacto quieres ver sus datos?
+    //jose
+    //path + contacto + .txt exist()
+    // else "El contacto no esta en el ajenDon"
+    // br.readLine
+    void verContactos() throws IOException {
+        nombre = JOptionPane.showInputDialog("Que contacto quieres ver sus datos?");
+        File f = new File(path);
+        f = new File(path + nombre + ".txt");
+        if(!f.exists())JOptionPane.showMessageDialog(null,"El contacto no esta en el AjenDon");
+        BufferedReader br = new BufferedReader(new FileReader(f));
+        nombre = br.readLine();
+        redesSociales = br.readLine(); //Escribimos las redes sociales
+        correoElectronico = br.readLine(); //Escribimos el correo electornico
+        comentarios = br.readLine(); // Escribimos sus comentarios
+        direccion = br.readLine(); //Escribimos su direccion
+        tipo = br.readLine(); //Escribimos que tipo de contacto es (temp - 1 es por que los arreglos comienzan desde 0 y preguntamos por 1.- amig 2.- compañero 3.- conocido)
+        numeroTelefono = br.readLine(); //Escribimos su numero de telefono
+        JOptionPane.showMessageDialog(null, "Nombre: " + nombre + "\n" + "Redes Sociales: " + redesSociales + "\n" + "Correo Electronico: " + correoElectronico + "\n" + "Comentarios: " + comentarios + "\n" + "Direccion: " + direccion + "\n" + "Tipo: " + tipo + "\n" + "Numero de telefono: " + numeroTelefono);
+    }
 
     void agregarPersona(){
         nombre = JOptionPane.showInputDialog("Ingrese el nombre a agregar");
@@ -17,9 +62,9 @@ public class Persona {
         numeroTelefono = JOptionPane.showInputDialog("Ingrese el numero de telefono");
     }
     void guardar() throws IOException { //Funcion que Guarda los datos por el usuario en una carpeta en el escritorio
-        File f = new File("C:/Users/kevin/Desktop/Agenda/"); // Definimos en donde se localizara la carpeta
+        File f = new File(path); // Definimos en donde se localizara la carpeta
         if(!f.exists())f.mkdirs(); //Si no existe la carpeta entonces la creamos
-        f = new File("C:/Users/kevin/Desktop/Agenda/" + nombre + ".txt"); //Creamos un archivo .txt con el nombre dado por el usuario
+        f = new File(path + nombre + ".txt"); //Creamos un archivo .txt con el nombre dado por el usuario
         BufferedWriter bw = new BufferedWriter(new FileWriter(f)); //Creamos un BufferedWriter para escribir en el documento
         bw.write(nombre); //Escribimos el nombre
         bw.newLine(); //Damos salto de linea
