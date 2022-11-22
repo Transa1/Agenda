@@ -10,7 +10,7 @@ public class Main {
         boolean rep = true;
 
         do {
-            opcion = JOptionPane.showInputDialog("Ingrese la primera letra de la opcion\nAgregar personas\nVer contactos\nSalir");
+            opcion = JOptionPane.showInputDialog("Ingrese la primera letra de la opcion\nAgregar personas\nVer contactos\nImportar contactos\nExportar contactos\nBorrar contactos\nSalir");
             opcion = opcion.toUpperCase();
             if (opcion.compareTo("A") == 0) {
                 p.agregarPersona();
@@ -21,6 +21,15 @@ public class Main {
             }
             else if(opcion.compareTo("V") == 0){
                 p.verContactos();
+            }
+            else if(opcion.compareTo("I") == 0){
+                p.importar();
+            }
+            else if(opcion.compareTo("E") == 0){
+                p.exportar();
+            }
+            else if(opcion.compareTo("B") == 0){
+                p.borrarContacto();
             }
             else{
                 JOptionPane.showMessageDialog(null,"Ingrese un valor valido");
