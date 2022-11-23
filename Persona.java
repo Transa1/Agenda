@@ -2,60 +2,52 @@ import javax.swing.*;
 import java.io.*;
 
 public class Persona {
-    String nombre, facebook, twitter, instagram, correoElectronico, comentarios, direccion;
+    String nombre, facebook, twitter, instagram, correoElectronico, comentarios, direccion; //Variables de los contactos
     String []tipoContacto = {"Amigo", "Conocido", "Compañero"}; // 1.- amigo 2.- conocido 3.-compañero
-    int temp; //tipoContacto[temp]
+    int temp; //Variable para acceder al tipo de contacto
     String numeroTelefono;
-    String path, pathImportar;
-    String tipo;
+    String path, pathImportar; //Variable de donde quieres guardar los contactos
+    String tipo; //Tipo de contacto
 
-    public Persona() throws IOException {
-        //crear un archivo en una direccion que solo nosotros conozcamos c:/Direccion/direccion.txt
-        // variable path
-        // direccion.exist();
-        //leer la direccion buffered reader
-        File f = new File("C:/Direccion/"); // Definimos en donde se localizara la carpeta
+    public Persona() throws IOException { //TODO Constrcutor de la agenda
+        //TODO Crea un archivo en una direccion que solo nosotros conozcamos (Por Ejemplo:   c:/Direccion/direccion.txt)
+        File f = new File("C:/Direccion/"); //TODO Definimos en donde se localizara la carpeta de configuracion
         if(!f.exists()){
             f.mkdirs(); //Si no existe la carpeta entonces la creamos
-            f = new File("C:/Direccion/direccion.txt");
+            f = new File("C:/Direccion/direccion.txt");//Creamos el archivo de configuracion
+            //Guardamos la direccion de memoria que diga el usuario:
             path = JOptionPane.showInputDialog("Ingrese la ruta de memoria para guardar sus contactos \n Ejemplo: C:/agenda");
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-            bw.write(path);
-            bw.flush();
-            bw.close();
+            bw.write(path);//Escribimos la direccion en el archivo
+            bw.flush();//guardamos el archivo
+            bw.close();//cerramos el archivo
         }
-        else{
-            f = new File("C:/Direccion/direccion.txt");
+        else{//TODO si ya hay un archivo de configuracion entonces accede a el para ver cual es la direccion de memoria
+            f = new File("C:/Direccion/direccion.txt");//Abrimos el archivo
             BufferedReader br = new BufferedReader(new FileReader(f));
-            path = br.readLine();
+            path = br.readLine();//Leemos la direccion de memoria y la asignamos a la vairable path
         }
     }
-    //path = usuario
-    //Que contacto quieres ver sus datos?
-    //jose
-    //path + contacto + .txt exist()
-    // else "El contacto no esta en el ajenDon"
-    // br.readLine
-    void verContactos() throws IOException {
-        nombre = JOptionPane.showInputDialog("Que contacto quieres ver sus datos?");
-        File f = new File(path);
-        f = new File(path + nombre + ".txt");
-        if(!f.exists())JOptionPane.showMessageDialog(null,"El contacto no esta en el AjenDon");
+    void verContactos() throws IOException { //TODO Metodo para ver los contactos de la agenda
+        nombre = JOptionPane.showInputDialog("Que contacto quieres ver sus datos?"); //Solicitamos el nombre del contacto
+        File f = new File(path + nombre + ".txt"); //Abrimos el archivo
+        if(!f.exists())JOptionPane.showMessageDialog(null,"El contacto no esta en el AjenDon");//Si no existe el contacto lo avisa
         BufferedReader br = new BufferedReader(new FileReader(f));
-        nombre = br.readLine();
-        numeroTelefono = br.readLine(); //Escribimos su numero de telefono
-        twitter = br.readLine(); //Escribimos las redes sociales
-        facebook = br.readLine();
-        instagram = br.readLine();
-        tipo = br.readLine(); //Escribimos que tipo de contacto es (temp - 1 es por que los arreglos comienzan desde 0 y preguntamos por 1.- amig 2.- compañero 3.- conocido)
-        comentarios = br.readLine(); // Escribimos sus comentarios
-        correoElectronico = br.readLine(); //Escribimos el correo electornico
-        direccion = br.readLine();
-
+        nombre = br.readLine();//Leemos el numero de telefono
+        numeroTelefono = br.readLine(); //Leemos su numero de telefono
+        twitter = br.readLine(); //Leemos su twitter
+        facebook = br.readLine();//Leemos su Facebook
+        instagram = br.readLine();//Leemos su Instagram
+        tipo = br.readLine(); //Leemos que tipo de contacto es
+        comentarios = br.readLine(); // Leemos sus comentarios
+        correoElectronico = br.readLine(); //Leemos el correo electornico
+        direccion = br.readLine(); //Leemos la direccion
+        //TODO Mostramos las variables de los datos en un MessageDialog
         JOptionPane.showMessageDialog(null, "Nombre: " + nombre + "\n" + "Numero de telefono: " + numeroTelefono + "\n" + "Twitter: " + twitter + "\n" + "Facebook: " + facebook + "\n" +  "Instagram: " + instagram + "\n" + "Tipo: " + tipo + "\n" + "Comentarios: " + comentarios + "\n" + "Correo Electronico: " + correoElectronico + "\n" + "Direccion: " + direccion);
     }
 
-    void agregarPersona() {
+    void agregarPersona() { //TODO Metodo para agregar personas a la agenda
+        //Solicitamos los datos al usuario
         nombre = JOptionPane.showInputDialog("Ingrese el nombre a agregar");
         numeroTelefono = JOptionPane.showInputDialog("Ingrese el numero de telefono");
         twitter = JOptionPane.showInputDialog("Ingrese el usuario de Twitter del contacto");
@@ -90,30 +82,24 @@ public class Persona {
         bw.write(direccion);
         bw.flush(); //Guardamos el documento
         bw.close(); //Cerramos el documento
-        JOptionPane.showMessageDialog(null,"¡Contacto guardado con éxito!");
+        JOptionPane.showMessageDialog(null,"¡Contacto guardado con éxito!");//Avisamos al usuario que se guardó el usuario
     }
-    void importar() throws IOException {
+    void importar() throws IOException { //TODO Metodo para importar contactos
+        //Solicitamos la direccion de memoria a importar
         pathImportar = JOptionPane.showInputDialog("Ingrese la ruta de memoria en donde se encuentra el contacto a importar \n Ejemplo: C:/agenda/");
+        //Solicitamos el nombre del contacto
         nombre = JOptionPane.showInputDialog("Ingrese el nombre del contacto");
-        File f = new File(pathImportar);
-        f = new File(pathImportar + nombre + ".txt");
-        if(!f.exists())JOptionPane.showMessageDialog(null,"No se encontró el archivo");
+        File f = new File(pathImportar + nombre + ".txt"); //Abrimos el archivo
+        if(!f.exists())JOptionPane.showMessageDialog(null,"No se encontró el archivo");//Si no existe el archivo avisa de que no lo encontró
         BufferedReader br = new BufferedReader(new FileReader(f));
-        nombre = br.readLine();
-        numeroTelefono = br.readLine(); //Escribimos su numero de telefono
-        twitter = br.readLine(); //Escribimos las redes sociales
-        facebook = br.readLine();
-        instagram = br.readLine();
-        tipo = br.readLine(); //Escribimos que tipo de contacto es (temp - 1 es por que los arreglos comienzan desde 0 y preguntamos por 1.- amig 2.- compañero 3.- conocido)
-        comentarios = br.readLine(); // Escribimos sus comentarios
-        System.out.println(nombre);
-        System.out.println(numeroTelefono);
-        System.out.println(twitter);
-        System.out.println(facebook);
-        System.out.println(instagram);
-        System.out.println(tipo);
-        System.out.println(comentarios);
-        f = new File(path + nombre + ".txt");
+        nombre = br.readLine(); //Leemos su nombre
+        numeroTelefono = br.readLine(); //Leemos su numero de telefono
+        twitter = br.readLine(); //Leemos su Twitter
+        facebook = br.readLine();//Leemos su Facebook
+        instagram = br.readLine();//Leemos su Instagram
+        tipo = br.readLine(); //Leemos que tipo de contacto es
+        comentarios = br.readLine(); //Leemos sus comentarios
+        f = new File(path + nombre + ".txt");//TODO Creamos un nuevo archivo dentro de nuestra carpeta de contactos
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write(nombre); //Escribimos el nombre
         bw.newLine(); //Damos salto de linea
@@ -125,28 +111,28 @@ public class Persona {
         bw.newLine(); //Damos salto de linea
         bw.write(instagram); //Escribimos las redes sociales
         bw.newLine(); //Damos salto de linea
-        bw.write(tipo); //Escribimos que tipo de contacto es (temp - 1 es por que los arreglos comienzan desde 0 y preguntamos por 1.- amig 2.- compañero 3.- conocido)
+        bw.write(tipo); //Escribimos que tipo de contacto es (temp - 1 es por que los arreglos comienzan desde 0 y preguntamos por 1.- amigo 2.- compañero 3.- conocido)
         bw.newLine(); //Damos salto de linea
         bw.write(comentarios); // Escribimos sus comentarios
-        bw.flush();
-        bw.close();
-        JOptionPane.showMessageDialog(null,"¡Contacto importado con éxito!");
+        bw.flush();//Guardamos el archivo
+        bw.close();//Cerramos el archivo
+        JOptionPane.showMessageDialog(null,"¡Contacto importado con éxito!"); //Avisamos al usuario que se importó con éxito
     }
 
-    void exportar() throws IOException {
+    void exportar() throws IOException { //TODO Metodo que exporta los contactos
+        //Preguntamos que contacto vamos a exportar
         nombre = JOptionPane.showInputDialog("¿Que contacto quiere exportar?");
-        File f = new File(path); // Definimos en donde se localizara la carpeta
-        f = new File(path + nombre + ".txt"); //Creamos un archivo .txt con el nombre dado por el usuario
-        if(!f.exists())JOptionPane.showMessageDialog(null,"No se encontró el archivo");
+        File f = new File(path + nombre + ".txt"); //Creamos un archivo .txt con el nombre dado por el usuario
+        if(!f.exists())JOptionPane.showMessageDialog(null,"No se encontró el archivo"); //Avisamos si no encontramos el contacto
         BufferedReader br = new BufferedReader(new FileReader(f));
-        nombre = br.readLine();
-        numeroTelefono = br.readLine(); //Escribimos su numero de telefono
-        twitter = br.readLine(); //Escribimos las redes sociales
-        facebook = br.readLine();
-        instagram = br.readLine();
-        tipo = br.readLine(); //Escribimos que tipo de contacto es (temp - 1 es por que los arreglos comienzan desde 0 y preguntamos por 1.- amig 2.- compañero 3.- conocido)
-        comentarios = br.readLine(); // Escribimos sus comentarios
-        f = new File(path + nombre + " Exportado" + ".txt");
+        nombre = br.readLine();//Leemos el nombre
+        numeroTelefono = br.readLine(); //Leemos su numero de telefono
+        twitter = br.readLine(); //Leemos su Twitter
+        facebook = br.readLine();//Leemos su Facebook
+        instagram = br.readLine();//Leemos su Instagram
+        tipo = br.readLine(); //Leemos que tipo de contacto es
+        comentarios = br.readLine(); //Leemos sus comentarios
+        f = new File(path + nombre + " Exportado" + ".txt"); //TODO Creamos el contacto exportado
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write(nombre); //Escribimos el nombre
         bw.newLine(); //Damos salto de linea
@@ -158,18 +144,18 @@ public class Persona {
         bw.newLine(); //Damos salto de linea
         bw.write(instagram); //Escribimos las redes sociales
         bw.newLine(); //Damos salto de linea
-        bw.write(tipo); //Escribimos que tipo de contacto es (temp - 1 es por que los arreglos comienzan desde 0 y preguntamos por 1.- amig 2.- compañero 3.- conocido)
+        bw.write(tipo); //Escribimos que tipo de contacto es 
         bw.newLine(); //Damos salto de linea
         bw.write(comentarios); // Escribimos sus comentarios
-        bw.flush();
-        bw.close();
-        JOptionPane.showMessageDialog(null,"¡Contacto exportado con éxito!");
+        bw.flush();//Guardamos el archivo
+        bw.close();//Cerramos el archivo
+        JOptionPane.showMessageDialog(null,"¡Contacto exportado con éxito!");//Avisamos que fue exportado con éxito
     }
-    void borrarContacto(){
-        nombre = JOptionPane.showInputDialog("Que contacto desea borrar?");
-        File f = new File(path + nombre + ".txt");
-        f.delete();
-        JOptionPane.showMessageDialog(null,"¡Contacto borrado con éxito!");
+    void borrarContacto(){//TODO Metodo para borrar contactos
+        nombre = JOptionPane.showInputDialog("Que contacto desea borrar?");//Preguntamos por el contacto a borrar
+        File f = new File(path + nombre + ".txt"); //Abrimos el archivo
+        f.delete(); //Borramos el archivo
+        JOptionPane.showMessageDialog(null,"¡Contacto borrado con éxito!");//Avisamos que fue borrado con éxito
     }
 }
 
