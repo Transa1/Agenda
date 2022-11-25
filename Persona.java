@@ -146,6 +146,12 @@ public class Persona {
         bw.write(comentarios); // Escribimos sus comentarios
         bw.flush();//Guardamos el archivo
         bw.close();//Cerramos el archivo
+        int i = 0;
+        File fi = new File("C:/Direccion/nombres.txt");
+        BufferedWriter buffr = new BufferedWriter(new FileWriter(fi,true));
+        buffr.write("\n" + nombre);
+        buffr.flush();
+        buffr.close();
         JOptionPane.showMessageDialog(null,"¡Contacto importado con éxito!"); //Avisamos al usuario que se importó con éxito
     }
 
