@@ -16,6 +16,8 @@ public class Main {
             JButton exportarContactos = new JButton("Exportar Contactos");
             JButton verContactos = new JButton("Ver Contactos");
             JButton salir = new JButton("Salir");
+            final String[]hayContacto = new String[1];
+            hayContacto[0] = "Si";
             frame.setSize(1110, 250);
             frame.setLayout(null);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,40 +83,46 @@ public class Main {
             });
             verContactos.addActionListener(e -> {
                 frame.setVisible(false);
-                JFrame frameContactos = new JFrame();
                 try {
                     contactos = new JComboBox(p.lecturaNombre());//se convierte en el arreglo de nombres
                 } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                   JOptionPane.showMessageDialog(null,"No hay ningun contacto en la agenda!");
+                   hayContacto[0] = "No";
                 }
-                frameContactos.setSize(300, 250);
-                frameContactos.setLayout(null);
-                frameContactos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frameContactos.setResizable(false);
-                frameContactos.getContentPane().setBackground(new Color(46, 112, 161));
-                frameContactos.setVisible(true);
-                frameContactos.add(contactos);
-                JTextArea selecContacto = new JTextArea("Seleccione el\n   Contacto");
-                selecContacto.setBounds(60,20,260,150);
-                selecContacto.setFont(new Font("Times New Roman", Font.BOLD, 30));
-                selecContacto.setBackground(new Color(46, 112, 161));
-                selecContacto.setEditable(false);
-                selecContacto.setLineWrap(false);
-                selecContacto.setWrapStyleWord(true);
-                selecContacto.setVisible(true);
-                frameContactos.add(selecContacto);
-                final String[] band = new String[1];
-                contactos.setBounds(50,150,200,50);
-                        contactos.addActionListener(E -> {
-                            band[0] = "AAA";
-                            try {
-                                p.verContactos((String) contactos.getSelectedItem());
-                                frameContactos.dispose();
-                                if(band[0].compareTo("AAA") == 0)frame.setVisible(true);
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
-                        });
+                if(hayContacto[0].compareTo("Si")==0){
+                    JFrame frameContactos = new JFrame();
+                    frameContactos.setSize(300, 250);
+                    frameContactos.setLayout(null);
+                    frameContactos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frameContactos.setResizable(false);
+                    frameContactos.getContentPane().setBackground(new Color(46, 112, 161));
+                    frameContactos.setVisible(true);
+                    frameContactos.add(contactos);
+                    JTextArea selecContacto = new JTextArea("Seleccione el\n   Contacto");
+                    selecContacto.setBounds(60,20,260,150);
+                    selecContacto.setFont(new Font("Times New Roman", Font.BOLD, 30));
+                    selecContacto.setBackground(new Color(46, 112, 161));
+                    selecContacto.setEditable(false);
+                    selecContacto.setLineWrap(false);
+                    selecContacto.setWrapStyleWord(true);
+                    selecContacto.setVisible(true);
+                    frameContactos.add(selecContacto);
+                    final String[] band = new String[1];
+                    contactos.setBounds(50,150,200,50);
+                    contactos.addActionListener(E -> {
+                        band[0] = "AAA";
+                        try {
+                            p.verContactos((String) contactos.getSelectedItem());
+                            frameContactos.dispose();
+                            if(band[0].compareTo("AAA") == 0)frame.setVisible(true);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+                }
+                else {
+                    frame.setVisible(true);
+                }
             });
             salir.addActionListener(e -> System.exit(0));
     }
