@@ -201,5 +201,3 @@ public class Persona {
         JOptionPane.showMessageDialog(null,"¡Contacto borrado con éxito!");//Avisamos que fue borrado con éxito
     }
 }
-
-
