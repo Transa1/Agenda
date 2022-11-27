@@ -1,10 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
-    //static String[] contacts = {"Nombres", "Ejemplo", "Pedro"};
     static JComboBox contactos;
     public static void main(String[] args) throws IOException {
         Persona p = new Persona();
